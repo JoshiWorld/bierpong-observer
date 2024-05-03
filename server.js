@@ -32,7 +32,19 @@ app.get('/subscribe/:id', (req, res) => {
               players: true,
             },
           },
-          matches: true
+          matches: {
+            include: {
+              team1: true,
+              team2: true,
+              winner: true,
+              looser: true,
+            },
+          },
+          groups: {
+            include: {
+                teams: true,
+            }
+          }
         },
       });
     if (data && data.password) {

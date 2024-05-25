@@ -30,6 +30,10 @@ app.get('/subscribe/:id', (req, res) => {
           teams: {
             include: {
               players: true,
+              team1Matches: true,
+              team2Matches: true,
+              winnerMatches: true,
+              looserMatches: true,
             },
           },
           matches: {
@@ -43,6 +47,14 @@ app.get('/subscribe/:id', (req, res) => {
           groups: {
             include: {
                 teams: true,
+                matches: {
+                  include: {
+                    team1: true,
+                    team2: true,
+                    winner: true,
+                    looser: true,
+                  },
+                },
             }
           }
         },

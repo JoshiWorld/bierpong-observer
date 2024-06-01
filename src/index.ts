@@ -11,7 +11,7 @@ const app = express();
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.setHeader(
     "Access-Control-Allow-Origin",
-    "https://bierpong.brokoly.de"
+    "*"
   ); // Replace with your frontend domain
   res.setHeader(
     "Access-Control-Allow-Methods",

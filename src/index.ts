@@ -10,7 +10,7 @@ const app = express();
 // Middleware to set CORS headers and SSE headers
 app.use((req: Request, res: Response, next: NextFunction) => {
   // Set CORS headers
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Origin", "https://bierpong.brokoly.de");
   res.setHeader(
     "Access-Control-Allow-Methods",
     "GET, POST, PUT, DELETE, OPTIONS"

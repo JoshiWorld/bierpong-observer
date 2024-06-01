@@ -1,5 +1,4 @@
 import express, { Request, Response, NextFunction } from "express";
-import cors from "cors";
 import dotenv from "dotenv";
 import { PrismaClient } from "@prisma/client";
 
@@ -8,20 +7,25 @@ dotenv.config();
 const prisma = new PrismaClient();
 const app = express();
 
-// Enable CORS for all routes
-app.use(
-  cors({
-    origin: "*", // You can specify an array of allowed origins instead of '*'
-    methods: ["GET", "POST"], // Specify allowed HTTP methods
-    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
-  })
-);
-
-// Middleware to set headers for SSE
+// Middleware to set CORS headers and SSE headers
 app.use((req: Request, res: Response, next: NextFunction) => {
+  // Set CORS headers
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, PUT, DELETE, OPTIONS"
+  );
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // Set headers for SSE
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
   res.setHeader("Connection", "keep-alive");
+
   next();
 });
 
@@ -68,7 +72,7 @@ app.get("/subscribe/:id", (req: Request, res: Response) => {
       });
 
       if (data && data.password) {
-        // @ts-expect-error || @ts-ignore
+        // @ts-expect-error
         delete data.password;
       }
 

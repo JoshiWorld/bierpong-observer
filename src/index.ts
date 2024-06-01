@@ -22,16 +22,15 @@ app.use((req: Request, res: Response, next: NextFunction) => {
     return res.sendStatus(200);
   }
 
-  // Set headers for SSE
-  res.setHeader("Content-Type", "text/event-stream");
-  res.setHeader("Cache-Control", "no-cache");
-  res.setHeader("Connection", "keep-alive");
-
   next();
 });
 
 // Route for subscribing
 app.get("/subscribe/:id", (req: Request, res: Response) => {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+
   const sendEvent = async () => {
     const id = req.params.id;
 

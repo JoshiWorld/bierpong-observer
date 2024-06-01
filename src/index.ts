@@ -9,7 +9,13 @@ const prisma = new PrismaClient();
 const app = express();
 
 // Enable CORS for all routes
-app.use(cors({ origin: "*" }));
+app.use(
+  cors({
+    origin: "*", // You can specify an array of allowed origins instead of '*'
+    methods: ["GET", "POST"], // Specify allowed HTTP methods
+    allowedHeaders: ["Content-Type", "Authorization"], // Specify allowed headers
+  })
+);
 
 // Middleware to set headers for SSE
 app.use((req: Request, res: Response, next: NextFunction) => {
